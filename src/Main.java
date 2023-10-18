@@ -35,21 +35,23 @@ public class Main {
         ) {
             System.out.print("Escolha o id que você vai querer aumentar o salario: ");
             Integer setId = input.nextInt();
+            if (getEmployee(employers, setId) == null) {
+                System.out.println("Funcionario não existe");
+            } else {
+                System.out.print("Quantos porcento você vai querer aumentar?  ");
+                Double percent = input.nextDouble();
 
-            try {
-                if (employers.get(setId-1).getId() == setId) {
-                    System.out.print("Quantos porcento você vai querer aumentar?  ");
-                    Double percent = input.nextDouble();
-                    employers.get(setId-1).increaseSalary(percent);
-                    System.out.println(employers.get(setId-1).toString());
-                    System.out.print("Você vai querer aumentar o salario de algum funcionario? (S/N)");
-                    sentinela = input.next();
-                }
-            } catch (Exception e) {
-                System.out.println("usuario nao encontrado");
+                employers.get(setId - 1).increaseSalary(percent);
+                System.out.println(employers.get(setId - 1).toString());
+                System.out.print("Você vai querer aumentar o salario de algum funcionario? (S/N)");
+                sentinela = input.next();
             }
         }
+    }
 
 
+    public static Employer getEmployee(List<Employer> employees, Integer id) {
+        Employer result = employees.stream().filter(x -> x.getId() == id).findFirst().orElse(null);
+        return result;
     }
 }
